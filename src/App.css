@@ -1,0 +1,51 @@
+.PrivateTabIndicator-colorSecondary-124{
+  background-color: #22B4C5 !important;
+  height: 5px !important;
+  
+}
+.MuiTabs-indicator{
+  background-color: #22B4C5 !important;
+  height: 5px !important;
+}
+.MuiTab-wrapper{
+  color:#22B4C5;
+  padding-bottom:15px;
+}
+.MuiTypography-body1{
+  position: absolute;
+  top: 25%;
+}
+.MuiIconButton-root{
+  width: 180px;
+}
+.MuiBox-root-119{
+  padding: 25px 100px !important;
+}
+.MuiBox-root-130{
+  padding: 25px 100px !important;
+}
+.p-datatable-header{
+  border: none !important;
+  height: 50px;
+  background-color:white !important;
+}
+.p-component{
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+font-size: 14px;
+box-shadow: 0px 4px 20px #00000042;
+border-radius: 10px;
+text-align: center;
+}
+.p-datatable .p-datatable-thead > tr > th{
+  border-bottom: none !important;
+  border-left: none !important;
+  border-top: none !important;
+  background-color: #22B4C533 !important;
+  color: #7A7A7A !important;
+}
+.p-datatable .p-datatable-tbody > tr > td{
+  border-bottom: none !important;
+  border-top: none !important;
+  height: 50px;
+  border-left: none !important;
+}
