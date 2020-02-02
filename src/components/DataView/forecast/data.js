@@ -1,6 +1,6 @@
 export const ForecastData = [
     {
-        "SKU": 10203,
+        "SKU": 10205,
         "Product": "Choclate Truffle Cake",
         "Segment": "Cake",
         "Size": "S06",

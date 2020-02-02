@@ -11,6 +11,8 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { LayoutImages,LogoutIcon } from '../images'
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -46,6 +48,9 @@ const useStyles = makeStyles(theme => ({
           padding:'1rem 0'
 
       },
+      Profile1:{
+        padding:'1rem 0'
+    },
       ImageResize:{
         border: "1px solid white",
         borderRadius: "100%",
@@ -59,6 +64,8 @@ const useStyles = makeStyles(theme => ({
 
 const Header = () => {
     const classes = useStyles();
+    const matches = useMediaQuery('(min-width:600px)');
+    console.log(matches)
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -79,15 +86,15 @@ const Header = () => {
                 <Typography className={classes.title} variant="h5" noWrap>
                    BAKERYS 
                 </Typography>
-                <Typography className={classes.title1} variant="h6" noWrap>
+               {matches? <Typography className={classes.title1} variant="h6" noWrap>
                     forecasting schedule
-                </Typography>
-                <div className={classes.Profile}> 
+                </Typography>:''}
+                <div className={matches?classes.Profile:classes.Profile1}> 
                 <IconButton aria-label="search" color="inherit" width="100px">
-                    <img src={LayoutImages.ProfileIcon} className={classes.ImageResize}/> <span style={{fontSize:'20px',padding:'8px'}}>Profile</span>
+                    <img src={LayoutImages.ProfileIcon} /> <span style={{fontSize:'20px',padding:'8px'}}>Profile</span>
                 </IconButton>
                 <IconButton aria-label="display more actions" edge="end" color="inherit">
-                <img src={LayoutImages.LogoutIcon} className={classes.ImageResize}/> <span style={{fontSize:'20px',padding:'8px'}}>Logout</span>
+                <img src={LayoutImages.LogoutIcon} /> <span style={{fontSize:'20px',padding:'8px'}}>Logout</span>
                 </IconButton>
                 </div>
                 </Toolbar>
