@@ -38,7 +38,9 @@ const TableTabs = ( ) => {
                 {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
                 </Tabs>
             <TabPanel  value={value} index={0}>
+              <div style={{width:"100%"}}>
                 <ForecastTable />
+                </div>
             </TabPanel>
             <TabPanel value={value} index={1}>
                 Summary
