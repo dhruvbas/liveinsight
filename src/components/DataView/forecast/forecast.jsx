@@ -52,7 +52,9 @@ const ForecastTable = () => {
                             <th style={{width:"200px"}}> 
                             <div class="container-2">
                                 <span>
-                                <input type="search" id="search" placeholder="Product..." /><span className="text">Lastname</span>
+                                 
+                                <input type="search" id="search" placeholder="Product..." />
+                                <label className="text">Lastname</label>
                                 </span>
                             </div>
                             </th>

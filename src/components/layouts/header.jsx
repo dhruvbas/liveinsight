@@ -58,7 +58,8 @@ const useStyles = makeStyles(theme => ({
 
 const Header = () => {
     const classes = useStyles();
-    const matches = useMediaQuery('(min-width:600px)');
+    const matches = useMediaQuery('(min-width:768px)');
+    const matche1 = useMediaQuery('(min-width:632px)');
     console.log(matches)
     const [value, setValue] = React.useState(0);
 

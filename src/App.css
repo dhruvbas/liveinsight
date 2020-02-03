@@ -133,7 +133,7 @@ transition: width .55s ease;
 background-color:white;
 }
 .container-2:hover .text{
-  display: none;
+ 
   -webkit-transition: width .55s ease;
   -moz-transition: width .55s ease;
   -ms-transition: width .55s ease;
