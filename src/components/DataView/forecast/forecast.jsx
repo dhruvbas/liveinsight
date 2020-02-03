@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Progress } from 'antd';
+import { Progress , Modal ,Button } from 'antd';
 import { DatePicker } from 'antd';
 import 'antd/dist/antd.css';
 import moment from 'moment';
+import Graph from "../graph";
+import LineGraph from "../../../images/line-chart.png";
 import { ForecastData } from './data';
 const { RangePicker } = DatePicker;
 
@@ -11,6 +13,10 @@ const ForecastTable = () => {
     const [forecastData, setforecastData] = useState([]);
     const [dateColumn, handleDateColumn] = useState([]);
     const [dateColumn1, handleDateColumn1] = useState([]);
+
+    const [openModal,handleModal] = useState(false);
+    const [forecastGraph,setgraphForecast] = useState([]);
+    const [actualGraph,setgraphActual] = useState([]);
 
 
     useEffect(() => {
@@ -98,6 +104,25 @@ const ForecastTable = () => {
       }
     }
 
+    const handleChart = (i) =>{
+      let tempArray1 = [];
+      let tempArray2 = [];
+      
+      forecastData[i].data.map( data => {
+        let index = dateColumn.indexOf(data.Date);
+
+        if(index >= 0)
+        {
+          tempArray1.push([data.Date,data.Forecast]);
+          tempArray2.push([data.Date,data.Actual]);
+        }
+      });
+
+      setgraphForecast(tempArray1);
+      setgraphActual(tempArray2);
+      handleModal(true);
+    }
+
     const handleChange = (e) =>{
       let tempData = JSON.parse(JSON.stringify(forecastData));
 
@@ -113,6 +138,24 @@ const ForecastTable = () => {
     
     return (
         <>
+          <Modal
+              title = "chart"
+              visible={openModal}
+              onCancel={()=>{handleModal(false)}}
+              width = {"80%"}
+              bodyStyle={{marginTop:"-20px"}}
+              footer={[
+                <Button key="submit" type="primary"  onClick={()=>{handleModal(false)}}>
+                  close
+                </Button>,
+              ]}
+            >
+              <Graph 
+                title = "Forecast vs Actual"
+                forecast = {forecastGraph}
+                actual = {actualGraph}
+              />
+            </Modal>
           <div className="mb-3">
                  <RangePicker onChange={onChange} />
           </div>
@@ -178,7 +221,7 @@ const ForecastTable = () => {
                           forecastData.map( (data,i) => {
                             return(                              
                               <tr>
-                                <td style={{minWidth:"200px"}}>{data.SKU}</td>
+                                <td style={{minWidth:"200px"}}><img src={LineGraph} alt="graph" style={{width:"15px",height:"15px",marginRight:"10px",cursor:"pointer"}} onClick={()=>{handleChart(i)}} />{data.SKU}</td>
                                 <td style={{minWidth:"250px"}}>{data.Product}</td>
                                 <td style={{minWidth:"200px"}}>{data.Segment}</td>
                                 <td style={{minWidth:"200px"}}>{data.Size}</td>

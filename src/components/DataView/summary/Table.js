@@ -1,8 +1,9 @@
 import React from "react";
 import { Progress } from 'antd';
 import 'antd/dist/antd.css';
+import LineGraph from "../../../images/line-chart.png";
 
-const Table = ({ tableData,dateColumn, type}) =>{
+const Table = ({ tableData,dateColumn, type , handleChange}) =>{
     return(
         <>
                  <table class="table table-responsive  first-col table-striped">
@@ -36,7 +37,7 @@ const Table = ({ tableData,dateColumn, type}) =>{
                         tableData.map( (data,i) => {
                             return(                              
                               <tr>
-                                <td style={{minWidth:"200px"}}>{data.Product}</td>
+                                <td style={{minWidth:"200px"}}><img src={LineGraph} alt="graph" style={{width:"15px",height:"15px",marginRight:"10px",cursor:"pointer"}} onClick={()=>{handleChange(i)}} />{data.Product}</td>
                                 {
                                   dateColumn.map( data1 => {
                                     let index = tableData[i].data.findIndex(x => x.Date === data1);

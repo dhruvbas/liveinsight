@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { DatePicker } from 'antd';
+import { DatePicker, Modal ,Button  } from 'antd';
 import 'antd/dist/antd.css';
+import Graph from "../graph";
 import moment from 'moment';
 import { summaryData } from './data';
 import Table from "./Table";
@@ -12,6 +13,10 @@ const SummaryTable = () => {
     const [summaryFROZENdata, setFrozen] = useState([]);
     const [dateColumn, handleDateColumn] = useState([]);
     const [dateColumn1, handleDateColumn1] = useState([]);
+
+    const [openModal,handleModal] = useState(false);
+    const [forecastGraph,setgraphForecast] = useState([]);
+    const [actualGraph,setgraphActual] = useState([]);
 
 
     useEffect(() => {
@@ -85,6 +90,45 @@ const SummaryTable = () => {
 
     }
 
+    const handleChart = (i) =>{
+        let tempArray1 = [];
+        let tempArray2 = [];
+        
+        summaryDSDdata[i].data.map( data => {
+          let index = dateColumn.indexOf(data.Date);
+  
+          if(index >= 0)
+          {
+            tempArray1.push([data.Date,data.Forecast]);
+            tempArray2.push([data.Date,data.Actual]);
+          }
+        });
+  
+        setgraphForecast(tempArray1);
+        setgraphActual(tempArray2);
+        handleModal(true);
+      }
+
+    const handleChart1 = (i) =>{
+    let tempArray1 = [];
+    let tempArray2 = [];
+    
+    summaryFROZENdata[i].data.map( data => {
+        let index = dateColumn.indexOf(data.Date);
+
+        if(index >= 0)
+        {
+        tempArray1.push([data.Date,data.Forecast]);
+        tempArray2.push([data.Date,data.Actual]);
+        }
+    });
+
+    setgraphForecast(tempArray1);
+    setgraphActual(tempArray2);
+    handleModal(true);
+    }
+
+
     const onChange = (date, dateString) =>{
       if(date.length > 0)
       {
@@ -110,6 +154,24 @@ const SummaryTable = () => {
     
     return (
         <>
+        <Modal
+              title = "chart"
+              visible={openModal}
+              onCancel={()=>{handleModal(false)}}
+              width = {"80%"}
+              bodyStyle={{marginTop:"-20px"}}
+              footer={[
+                <Button key="submit" type="primary"  onClick={()=>{handleModal(false)}}>
+                  close
+                </Button>,
+              ]}
+            >
+              <Graph 
+                title = "Forecast vs Actual"
+                forecast = {forecastGraph}
+                actual = {actualGraph}
+              />
+            </Modal>
           <div className="mb-3">
                  <RangePicker onChange={onChange} />
           </div>
@@ -118,12 +180,14 @@ const SummaryTable = () => {
                     tableData = {summaryDSDdata}
                     dateColumn = {dateColumn}
                     type = "DSD"
+                    handleChange = {handleChart}
                 />
                 <br/><br/><br/>
                 <Table 
                     tableData = {summaryFROZENdata}
                     dateColumn = {dateColumn}
                     type = "FROZEN"
+                    handleChange = {handleChart1}
                 />
             </div>
         </>
