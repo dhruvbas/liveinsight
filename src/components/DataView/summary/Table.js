@@ -49,18 +49,17 @@ const Table = ({ tableData,dateColumn, type , handleChange}) =>{
                                         <td style={{width:'200px',borderTop:'none'}}>{tableData[i].data[index].Forecast}</td>
                                         <td style={{width:'200px',borderTop:'none'}}>{tableData[i].data[index].Actual}</td>
                                         <td style={{width:'200px',borderTop:'none',padding:'0'}}>
-                                          <span className={(Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual)*100 < 40 || tableData[i].data[index].Actual === 0? "A" : (Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual)*100 < 70 ? "B" : (Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual)*100 < 90 ? "C" : "D"}>
+                                          <span className={(1-(Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual))*100 < 40 ? "A" : (1-(Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual))*100 < 70 ? "B" : (1-(Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual))*100 < 90 ? "C" : "D"}>
                                             <Progress  
                                               gapDegree={125} 
-                                              strokeColor={(Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual)*100 < 40  || tableData[i].data[index].Actual === 0? "red" : (Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual)*100 < 70 ? "#FFAA00" : (Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual)*100 < 90 ? "#E6F600" : "green"} 
+                                              strokeColor={(1-(Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual))*100 < 40 ? "red" : (1-(Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual))*100 < 70 ? "#FFAA00" : (1-(Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual))*100 < 90 ? "#E6F600" : "green"} 
                                               width={70} 
                                               strokeLinecap = {1} 
                                               strokeWidth={10} 
                                               type="dashboard" 
                                               percent={
-                                                (Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual)*100 !== 0 && tableData[i].data[index].Actual !== 0?
-                                                ((Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual)*100).toFixed(2) 
-                                                : 0} />
+                                                
+                                                ((1-(Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual).toFixed(2))*100) } />
                                           </span>
                                           </td>
                                       </td>

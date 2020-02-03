@@ -42,16 +42,16 @@ const TableTabs = ( ) => {
         <>
            <div>
             <Tabs value={value} onChange={handleChange} className={classes.Tabs} aria-label="simple tabs example">
-                <Tab label="Forecast"  {...a11yProps(0)} />
-                <Tab label="Summary" {...a11yProps(1)} />
+                <Tab label="Summary"  {...a11yProps(0)} />
+                <Tab label="Forecast" {...a11yProps(1)} />
                 </Tabs>
-            <TabPanel  value={value} index={0}>
+            <TabPanel value={value} index={0}>
+              <SummaryTable />
+            </TabPanel>
+            <TabPanel  value={value} index={1}>
               <div style={{width:"100%"}}>
                 <ForecastTable />
                 </div>
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              <SummaryTable />
             </TabPanel>
             </div>
         </>
