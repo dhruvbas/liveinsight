@@ -10,6 +10,7 @@ const ForecastTable = () => {
 
     const [forecastData, setforecastData] = useState([]);
     const [dateColumn, handleDateColumn] = useState([]);
+    const [dateColumn1, handleDateColumn1] = useState([]);
 
 
     useEffect(() => {
@@ -27,28 +28,42 @@ const ForecastTable = () => {
           {
             tempDateColumn.push(data.Date);
           }
-          let index = groupedData.findIndex(x => x.SKU === data.SKU);
+          let index = groupedData.findIndex(x => x.SKU.toString() === data.SKU.toString());
+          let forecast = data.Forecast;
+          let actual = data.Actual;
+
+          if(typeof forecast == "string")
+          {
+            forecast = forecast.replace(",", "");
+            forecast = forecast.replace(".", "");
+          }
+          if(typeof actual == "string")
+          {
+            actual = actual.replace(",", "");
+            actual = actual.replace(".", "");
+          }
+
           if (index >= 0) {
               groupedData[index].data.push({
                   Date: data.Date,
-                  Forecast: data.Forecast,
-                  Actual: data.Actual
+                  Forecast: +forecast,
+                  Actual: +actual
               })
           }
           else {
               let temp_object = {};
-
-              temp_object.SKU = data.SKU;
+              temp_object.SKU = data.SKU.toString();
               temp_object.Product = data.Product;
               temp_object.Segment = data.Segment;
               temp_object.Size = data.Size;
               temp_object.Category = data.Category;
               temp_object.PackageSize = data.PackageSize;
               temp_object.Conversion = data.Conversion;
+
               temp_object.data = [{
                   Date: data.Date,
-                  Forecast: data.Forecast,
-                  Actual: data.Actual
+                  Forecast: +forecast,
+                  Actual: +actual
               }];
               
               groupedData.push(temp_object);
@@ -56,6 +71,7 @@ const ForecastTable = () => {
       })
 
       handleDateColumn(tempDateColumn);
+      handleDateColumn1(tempDateColumn);
       setforecastData(groupedData);
       console.log(groupedData);
     }
@@ -64,7 +80,7 @@ const ForecastTable = () => {
       if(date.length > 0)
       {
         let tempDate = [];
-        dateColumn.map(data => {
+        dateColumn1.map(data => {
           if(moment(data).format("YYYY-MM-DD") >=  moment(dateString[0]).format("YYYY-MM-DD") && moment(data).format("YYYY-MM-DD") <=  moment(dateString[1]).format("YYYY-MM-DD"))
           {
             tempDate.push(moment(data).format("MM/D/YYYY"))
@@ -82,6 +98,18 @@ const ForecastTable = () => {
       }
     }
 
+    const handleChange = (e) =>{
+      let tempData = JSON.parse(JSON.stringify(forecastData));
+
+      console.log(tempData);
+
+      let newData = tempData.filter(x => {
+        let text = new RegExp(e.target.value, "i");
+        return x[e.target.name].search(text) >= 0 ?  true:  false
+      });
+      setforecastData(newData);
+      console.log(newData);
+    }
     
     return (
         <>
@@ -93,38 +121,38 @@ const ForecastTable = () => {
                 <table class="table table-responsive  first-col table-striped">
                     <thead>
                         <tr>
-                            <th style={{width:"200px"}}> 
+                            <th style={{minWidth:"200px"}}> 
                             <div class="container-2">
                                 <span>
-                                <input type="search" id="search" placeholder="SKU..." /><span className="text">SKU</span>
+                                <input name="SKU" onChange={handleChange} type="search" id="search" placeholder="SKU..." /><span className="text">SKU</span>
                                 </span>
                             </div>
                             </th>
-                            <th style={{width:"200px"}}>
+                            <th style={{minWidth:"250px"}}>
                             <div class="container-2">
                                 <span>
-                                <input type="search" id="search" placeholder="Product..." /><span className="text">product</span>
+                                <input name="Product" onChange={handleChange} type="search" id="search" placeholder="Product..." /><span className="text">product</span>
                                 </span>
                                 </div>
                             </th>
-                            <th style={{width:"200px"}}>
+                            <th style={{minWidth:"200px"}}>
                             <div class="container-2">
                                 <span>
-                                <input type="search" id="search" placeholder="Segment..." /><span className="text">Segment</span>
+                                <input name="Segment" onChange={handleChange} type="search" id="search" placeholder="Segment..." /><span className="text">Segment</span>
                                 </span>
                             </div>
                             </th>
-                            <th style={{width:"200px"}}>
+                            <th style={{minWidth:"200px"}}>
                             <div class="container-2">
                                 <span>
-                                <input type="search" id="search" placeholder="Size..." /><span className="text">Size</span>
+                                <input name="Size" onChange={handleChange} type="search" id="search" placeholder="Size..." /><span className="text">Size</span>
                                 </span>
                             </div>
                             </th>
-                            <th style={{width:"200px"}}> 
+                            <th style={{minWidth:"200px"}}> 
                             <div class="container-2">
                                 <span>
-                                <input type="search" id="search" placeholder="Category..." /><span className="text">Category</span>
+                                <input name="Category" onChange={handleChange} type="search" id="search" placeholder="Category..." /><span className="text">Category</span>
                                 </span>
                             </div>
                             </th>
@@ -164,16 +192,16 @@ const ForecastTable = () => {
                                         <td style={{width:'200px',borderTop:'none'}}>{forecastData[i].data[index].Forecast}</td>
                                         <td style={{width:'200px',borderTop:'none'}}>{forecastData[i].data[index].Actual}</td>
                                         <td style={{width:'200px',borderTop:'none',padding:'0'}}>
-                                          <span className={(Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 < 40 ? "A" : (Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 < 70 ? "B" : (Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 < 90 ? "C" : "D"}>
+                                          <span className={(Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 < 40 || forecastData[i].data[index].Actual === 0 ? "A" : (Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 < 70 ? "B" : (Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 < 90 ? "C" : "D"}>
                                             <Progress  
                                               gapDegree={125} 
-                                              strokeColor={(Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 < 40 ? "red" : (Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 < 70 ? "#FFAA00" : (Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 < 90 ? "#E6F600" : "green"} 
+                                              strokeColor={(Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 < 40 || forecastData[i].data[index].Actual === 0 ? "red" : (Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 < 70 ? "#FFAA00" : (Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 < 90 ? "#E6F600" : "green"} 
                                               width={"70px"} 
                                               strokeLinecap = {1} 
                                               strokeWidth={10} 
                                               type="dashboard" 
                                               percent={
-                                                (Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 !== 0 ?
+                                                (Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 !== 0 && forecastData[i].data[index].Actual !== 0 ?
                                                 ((Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100).toFixed(2) 
                                                 : 0} />
                                           </span>

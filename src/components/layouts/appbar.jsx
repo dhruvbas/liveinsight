@@ -5,9 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import ForecastTable from '../DataView/forecast/forecast'
-import { DatePicker } from 'antd';
-import 'antd/dist/antd.css';
-const { RangePicker } = DatePicker;
+import SummaryTable from '../DataView/summary/summary'
 
 const useStyles = makeStyles(theme => ({
     Tabs:{
@@ -48,7 +46,7 @@ const TableTabs = ( ) => {
                 </div>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Summary
+              <SummaryTable />
             </TabPanel>
             {/* <TabPanel value={value} index={2}>
                 Item Three

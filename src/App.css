@@ -239,5 +239,5 @@ input[type=text]:focus {
   color:green;
 }
 .ant-calendar-range{
-  width: 625px !important;
+  width: 100% !important;
 }
