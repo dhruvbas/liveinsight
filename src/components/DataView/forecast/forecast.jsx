@@ -17,6 +17,7 @@ const ForecastTable = () => {
         {brand: 'Philips', lastYearSale: '49%', thisYearSale: '22%', lastYearProfit: '$745,232', thisYearProfit: '$650,323,'},
         {brand: 'Song', lastYearSale: '17%', thisYearSale: '79%', lastYearProfit: '$643,242', thisYearProfit: '500,332'},
         {brand: 'LG', lastYearSale: '52%', thisYearSale: ' 65%', lastYearProfit: '$421,132', thisYearProfit: '$150,005'},
+        
     ]
 
     const [ inmemoryData,setinmemoryData ] = useState(Data);
@@ -46,14 +47,16 @@ const ForecastTable = () => {
         <Column header="Size" rowSpan={3} filter={true} filterElement={header1}/>
         </Row>
     <Row>
-        <Column header="21-09-1996" colSpan={3} />
-        <Column header="12-05-1996" colSpan={3} />
-        <Column header="21-09-1996" colSpan={3} />
-        <Column header="12-05-1996" colSpan={3} />
+        {Data.map(data => 
+        <Column header={data.brand} colSpan={3} />
+        )}
     </Row>
     <Row>
-        <Column header="forecast" />
-        <Column header="Actual" />
+            {Data.map(data => 
+             <Column header="forecast" /> 
+             )}
+
+        {/* <Column header="Actual" />
         <Column header="Accuracy" />
         <Column header="forecast" />
         <Column header="Actual" />
@@ -63,7 +66,7 @@ const ForecastTable = () => {
         <Column header="Accuracy" />
         <Column header="forecast" />
         <Column header="Actual" />
-        <Column header="Accuracy" />
+        <Column header="Accuracy" /> */}
     </Row>
 </ColumnGroup>;
   
@@ -85,15 +88,7 @@ const ForecastTable = () => {
             <Column field="Category"   style={{width:'200px'}}/> 
             <Column field="PackageSize"  style={{width:'200px'}} />
             <Column field="Conversion" style={{width:'200px'}} />
-            <Column field="Date"  style={{width:'200px'}}/>
-            <Column field="Forecast" style={{width:'200px'}}/>
-            <Column field="Actual"  style={{width:'200px'}}/>
-            <Column field="Category"  style={{width:'200px'}} /> 
-            <Column field="PackageSize"   style={{width:'200px'}}/>
-            <Column field="Conversion"  style={{width:'200px'}}/>
-            <Column field="Date"  style={{width:'200px'}} />
-            <Column field="Forecast" style={{width:'200px'}}/>
-            <Column field="Actual" style={{width:'200px'}} />
+            {Data.map(data => <Column field="Date"  style={{width:'200px'}}/>)}
         </DataTable>
         </>
     )
