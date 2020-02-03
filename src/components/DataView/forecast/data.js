@@ -8,7 +8,7 @@ export const ForecastData = [
         "PackageSize": 1,
         "Conversion": 1,
         "Date": "11/2/2019",
-        "Forecast": 20,
+        "Forecast": 22,
         "Actual": 22
       },
       {
