@@ -53,13 +53,23 @@ tr,th{
   border-left:none;
 }
 
-@media screen and (max-width: 768px ) {
- 
+@media screen and (min-width: 768px ) {
+  .MuiToolbar-gutters{
+    display: contents;
+  }
+}
+@media (min-width: 250px) and (max-width: 767px) {
+  
+  .MuiToolbar-gutters{
+    display: contents;
+  }
 }
 /* 
 search css
 */
- 
+ body{
+   overflow: hidden;
+ }
 .box{
 
 }
@@ -132,14 +142,34 @@ width: 100%;
 transition: width .55s ease;
 background-color:white;
 }
-.container-2:hover .text{
- 
+.container-2 input#search:focus,.container-2:active input#search{
+  width: 100%;
+  -webkit-transition: width .55s ease;
+  -moz-transition: width .55s ease;
+  -ms-transition: width .55s ease;
+  -o-transition: width .55s ease;
+  transition: width .55s ease;
+  background-color:white;
+  }
+  .container-2:focus,.container-2:active .text{
+    display:  none;
+    }
+  .container-2:hover .text{
+  display: none;
   -webkit-transition: width .55s ease;
   -moz-transition: width .55s ease;
   -ms-transition: width .55s ease;
   -o-transition: width .55s ease;
   transition: width .55s ease;
   }
+/* .container-2 input#search:focus ,.container-2 input#search:active .text{
+  display: none;
+  -webkit-transition: width .55s ease;
+  -moz-transition: width .55s ease;
+  -ms-transition: width .55s ease;
+  -o-transition: width .55s ease;
+  transition: width .55s ease;
+  } */
  
 .container-2:hover .icon{
   color: #93a2ad;
@@ -153,13 +183,13 @@ background-color:white;
 .MuiTypography-body1{
   margin: 10% 50%;
 }
-th:first-child, td:first-child{
+th:first-child, tbody td:first-child{
   position: sticky;
   left: 0px;
   z-index: 1;
 }
 tr:nth-child(odd) > td{
-  background-color: #ededed;
+  background-color: #F9F9F9;
 }
 tr:nth-child(even) > td{
   background-color:white;
@@ -173,6 +203,7 @@ th{
 }
 .table td{
   vertical-align: middle !important;
+  padding: 0;
 }
 input[type=text] {
   width:0;
@@ -190,4 +221,34 @@ input[type=text] {
 
 input[type=text]:focus {
   width: 100%;
+}
+
+.default_row td:first-child{
+  position: static;
+}
+
+.ant-progress{
+  padding: 0.7rem 0 0 0 !important;
+}
+
+.A .ant-progress-circle .ant-progress-text{
+  color:red;
+}
+
+.B .ant-progress-circle .ant-progress-text{
+  color:#FFAA00;
+}
+
+.C .ant-progress-circle .ant-progress-text{
+  color:#E6F600;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.D .ant-progress-circle .ant-progress-text{
+  color:green;
+}
+.ant-calendar-range{
+  width: 100% !important;
+  overflow: auto;
 }

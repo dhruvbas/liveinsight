@@ -17,6 +17,11 @@ const useStyles = makeStyles(theme => ({
         fontFamily:'Montserrat',
         padding:'0% 3%'
     },
+    AppBar1:{
+      backgroundColor:'#22282A',
+      fontFamily:'Montserrat',
+      padding:'0% 3%',
+  },
     menuButton: {
       marginRight: theme.spacing(2),
     },
@@ -28,12 +33,14 @@ const useStyles = makeStyles(theme => ({
       padding:'1rem 0.2rem',
       textTransform:'uppercase',
       display:'flex',
-      fontSize:'40px'
+      fontSize:'40px',
+      color:'white'
     },
     title1: {
         padding:'1.5rem 0.5rem',
         textTransform:'uppercase',
         display:'flex',
+        color:'white'
         
       },
       Profile:{
@@ -72,10 +79,10 @@ const Header = () => {
           'aria-controls': `simple-tabpanel-${index}`,
         };
       }
+      
     return(
         <>  
-            <div>
-            <AppBar  className={classes.AppBar}>
+            <AppBar  className={matche1?classes.AppBar:classes.AppBar1}>
                 {/*  Tool Bar  - Start*/}
                 <Toolbar className={classes.toolbar}>
                 <Typography className={classes.title} variant="h5" noWrap>
@@ -103,8 +110,6 @@ const Header = () => {
             </AppBar>
 
             {/*  Table Pannel */}
-            
-            </div>
         </>
     )
 }
