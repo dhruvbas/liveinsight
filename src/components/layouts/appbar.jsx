@@ -6,16 +6,23 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import ForecastTable from '../DataView/forecast/forecast'
 import SummaryTable from '../DataView/summary/summary'
+import 'antd/dist/antd.css';
+
 
 const useStyles = makeStyles(theme => ({
     Tabs:{
         position:'absolute',
         top:'15%',
         padding:'0% 5%'
+    },
+    Tabs1:{
+      position:'absolute',
+      top:'26%',
+      padding:'0% 5%'
+  },
 
-    }
+
   }));
-
 
 const TableTabs = ( ) => {
     const classes = useStyles();
@@ -24,33 +31,29 @@ const TableTabs = ( ) => {
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
+    
     function a11yProps(index) {
         return {
           id: `simple-tab-${index}`,
           'aria-controls': `simple-tabpanel-${index}`,
         };
       }
-     
     return(
         <>
-           
+           <div>
             <Tabs value={value} onChange={handleChange} className={classes.Tabs} aria-label="simple tabs example">
-                <Tab label="Forecast" {...a11yProps(0)} />
+                <Tab label="Forecast"  {...a11yProps(0)} />
                 <Tab label="Summary" {...a11yProps(1)} />
-                {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
                 </Tabs>
             <TabPanel  value={value} index={0}>
               <div style={{width:"100%"}}>
-                
                 <ForecastTable />
                 </div>
             </TabPanel>
             <TabPanel value={value} index={1}>
               <SummaryTable />
             </TabPanel>
-            {/* <TabPanel value={value} index={2}>
-                Item Three
-            </TabPanel>  */}
+            </div>
         </>
     )
 }

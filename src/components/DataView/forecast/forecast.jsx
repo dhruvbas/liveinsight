@@ -6,6 +6,9 @@ import moment from 'moment';
 import Graph from "../graph";
 import LineGraph from "../../../images/line-chart.png";
 import { ForecastData } from './data';
+import { LayoutImages } from '../../images'
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 const { RangePicker } = DatePicker;
 
 const ForecastTable = () => {
@@ -20,7 +23,7 @@ const ForecastTable = () => {
 
 
     useEffect(() => {
-      groupData();
+        groupData();
     }, []);
 
     const groupData = () =>{
@@ -85,24 +88,26 @@ const ForecastTable = () => {
     const onChange = (date, dateString) =>{
       if(date.length > 0)
       {
-        let tempDate = [];
+        let tempDateColumn = [];
         dateColumn1.map(data => {
           if(moment(data).format("YYYY-MM-DD") >=  moment(dateString[0]).format("YYYY-MM-DD") && moment(data).format("YYYY-MM-DD") <=  moment(dateString[1]).format("YYYY-MM-DD"))
           {
-            tempDate.push(moment(data).format("MM/D/YYYY"))
+            tempDateColumn.push(moment(data).format("MM/D/YYYY"))
           }
           else
           {
             console.log("not inside range");
           }
+          return null;
         })
-        handleDateColumn(tempDate);
-      }
-      else
-      {
-        groupData();
-      }
+
+        handleDateColumn(tempDateColumn);
+        
     }
+    else {
+      groupData();
+  }
+}
 
     const handleChart = (i) =>{
       let tempArray1 = [];
@@ -116,6 +121,7 @@ const ForecastTable = () => {
           tempArray1.push([data.Date,data.Forecast]);
           tempArray2.push([data.Date,data.Actual]);
         }
+        return null;
       });
 
       setgraphForecast(tempArray1);
@@ -135,6 +141,8 @@ const ForecastTable = () => {
       setforecastData(newData);
       console.log(newData);
     }
+
+    const matches = useMediaQuery('(min-width:768px)');
     
     return (
         <>
@@ -156,82 +164,84 @@ const ForecastTable = () => {
                 actual = {actualGraph}
               />
             </Modal>
+            
+        <div className={matches?"":'mt-5'}>
           <div className="mb-3">
                  <RangePicker onChange={onChange} />
           </div>
-            <div >
+            <div style={{ width: "max-content",maxWidth:'100vw' ,paddingRight:'2rem'}}>
            
-                <table class="table table-responsive  first-col table-striped">
+                <table className="table table-responsive  first-col table-striped">
                     <thead>
                         <tr>
-                            <th style={{minWidth:"200px"}}> 
-                            <div class="container-2">
+                            <th style={{width:"200px"}}> 
+                            <div className="container-2">
                                 <span>
                                 <input name="SKU" onChange={handleChange} type="search" id="search" placeholder="SKU..." /><span className="text">SKU</span>
                                 </span>
                             </div>
                             </th>
-                            <th style={{minWidth:"250px"}}>
-                            <div class="container-2">
+                            <th style={{width:"200px"}}>
+                            <div className="container-2">
                                 <span>
                                 <input name="Product" onChange={handleChange} type="search" id="search" placeholder="Product..." /><span className="text">product</span>
                                 </span>
                                 </div>
                             </th>
-                            <th style={{minWidth:"200px"}}>
-                            <div class="container-2">
+                            <th style={{width:"200px"}}>
+                            <div className="container-2">
                                 <span>
                                 <input name="Segment" onChange={handleChange} type="search" id="search" placeholder="Segment..." /><span className="text">Segment</span>
                                 </span>
                             </div>
                             </th>
-                            <th style={{minWidth:"200px"}}>
-                            <div class="container-2">
+                            <th style={{width:"200px"}}>
+                            <div className="container-2">
                                 <span>
                                 <input name="Size" onChange={handleChange} type="search" id="search" placeholder="Size..." /><span className="text">Size</span>
                                 </span>
                             </div>
                             </th>
-                            <th style={{minWidth:"200px"}}> 
-                            <div class="container-2">
+                            <th style={{width:"200px"}}> 
+                            <div className="container-2">
                                 <span>
                                 <input name="Category" onChange={handleChange} type="search" id="search" placeholder="Category..." /><span className="text">Category</span>
                                 </span>
                             </div>
                             </th>
                             {
-                              dateColumn.map(data =>
-                                <th style={{backgroundColor:'transparent !important'}}>
-                                    <tr style={{ display: 'block' ,backgroundColor:'transparent !important'}}>
-                                          <center>{data}</center>
-                                      
-                                            <th style={{backgroundColor:'transparent !important',width:'200px'}}>
+                                dateColumn.map((data,j) =>
+                                    <th key={j} style={{ backgroundColor: 'transparent !important' }}>
+                                        <tr style={{ display: 'block', backgroundColor: 'transparent !important' }}>
+                                            <center>{data}</center>
+
+                                            <th style={{ backgroundColor: 'transparent !important', width: '200px' }}>
                                                 Forecast</th>
-                                            <th style={{backgroundColor:'transparent !important',width:'200px'}}>Actual</th>
-                                            <th style={{backgroundColor:'transparent !important',width:'200px'}}>Accuracy</th>
-                                    
-                                    </tr>
-                                </th>
-                            )}
-                       </tr>
+                                            <th style={{ backgroundColor: 'transparent !important', width: '200px' }}>Actual</th>
+                                            <th style={{ backgroundColor: 'transparent !important', width: '200px' }}>Accuracy</th>
+
+                                        </tr>
+                                    </th>
+                                )}
+                        </tr>
                     </thead>
                     <tbody>
                         {
                         dateColumn.length > 0 && forecastData.length > 0?
                           forecastData.map( (data,i) => {
                             return(                              
-                              <tr>
+                              <tr key={i}>
                                 <td style={{minWidth:"200px"}}><img src={LineGraph} alt="graph" style={{width:"15px",height:"15px",marginRight:"10px",cursor:"pointer"}} onClick={()=>{handleChart(i)}} />{data.SKU}</td>
                                 <td style={{minWidth:"250px"}}>{data.Product}</td>
                                 <td style={{minWidth:"200px"}}>{data.Segment}</td>
                                 <td style={{minWidth:"200px"}}>{data.Size}</td>
                                 <td style={{minWidth:"200px"}}>{data.Category}</td>
                                 {
-                                  dateColumn.map( data1 => {
+                                  dateColumn.map( (data1,z) => {
                                     let index = forecastData[i].data.findIndex(x => x.Date === data1);
                                     return(                                      
                                         index >= 0 ?
-                                        <td className="default_row">
+                                        <td key={z} className="default_row">
                                         <td style={{width:'200px',borderTop:'none'}}>{forecastData[i].data[index].Forecast}</td>
                                         <td style={{width:'200px',borderTop:'none'}}>{forecastData[i].data[index].Actual}</td>
                                         <td style={{width:'200px',borderTop:'none',padding:'0'}}>
@@ -239,13 +249,13 @@ const ForecastTable = () => {
                                             <Progress  
                                               gapDegree={125} 
                                               strokeColor={(Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 < 40 || forecastData[i].data[index].Actual === 0 ? "red" : (Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 < 70 ? "#FFAA00" : (Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 < 90 ? "#E6F600" : "green"} 
-                                              width={"70px"} 
+                                              width={70} 
                                               strokeLinecap = {1} 
                                               strokeWidth={10} 
                                               type="dashboard" 
                                               percent={
                                                 (Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100 !== 0 && forecastData[i].data[index].Actual !== 0 ?
-                                                ((Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100).toFixed(2) 
+                                                +((Math.abs(forecastData[i].data[index].Actual - forecastData[i].data[index].Forecast)/forecastData[i].data[index].Actual)*100).toFixed(2) 
                                                 : 0} />
                                           </span>
                                           </td>
@@ -254,25 +264,28 @@ const ForecastTable = () => {
                                       <td className="default_row">
                                         <td style={{width:'200px',borderTop:'none'}}>-</td>
                                         <td style={{width:'200px',borderTop:'none'}}>-</td>
-                                        <td style={{width:'200px',borderTop:'none'}}>
-                                          -
-                                          </td>
+                                        <td style={{width:'200px',borderTop:'none'}}>-</td>
                                       </td>
-                                      
-                                      
                                     )
                                   })
+                               }
+                                </tr>
+                                )
                                 }
-                              </tr>
-                            )}
-                            )
-                          :
-                          <p>No Data Available!</p>
-                        }                    
+                                )
+                                :
+                                <tr>
+                                    <td colSpan="5">
+                                    <img src = {LayoutImages.NoData} alt="No data" width="50%" height="25%" />
+                                    </td>
+                                </tr>
+                        }
                     </tbody>
 
                 </table>
             </div>
+        </div>
+
         </>
     )
 }

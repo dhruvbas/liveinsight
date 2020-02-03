@@ -1,15 +1,17 @@
 import React from "react";
 import { Progress } from 'antd';
 import 'antd/dist/antd.css';
+import { LayoutImages } from '../../images'
 import LineGraph from "../../../images/line-chart.png";
 
 const Table = ({ tableData,dateColumn, type , handleChange}) =>{
     return(
         <>
+            <div style={{ width: "max-content",maxWidth:'100vw' ,paddingRight:'2rem'}}>
                  <table class="table table-responsive  first-col table-striped">
                     <thead>
                         <tr>
-                            <th style={{minWidth:"200px"}}> 
+                            <th style={{width:"200px"}}> 
                                
                                     {type}
                                     <th style={{backgroundColor:'transparent !important',width:'200px'}}>Types</th>
@@ -36,14 +38,14 @@ const Table = ({ tableData,dateColumn, type , handleChange}) =>{
                          dateColumn.length > 0  && tableData.length > 0?
                         tableData.map( (data,i) => {
                             return(                              
-                              <tr>
+                              <tr key={i}>
                                 <td style={{minWidth:"200px"}}><img src={LineGraph} alt="graph" style={{width:"15px",height:"15px",marginRight:"10px",cursor:"pointer"}} onClick={()=>{handleChange(i)}} />{data.Product}</td>
                                 {
-                                  dateColumn.map( data1 => {
+                                  dateColumn.map( (data1,z) => {
                                     let index = tableData[i].data.findIndex(x => x.Date === data1);
                                     return(                                      
                                         index >= 0 ?
-                                        <td className="default_row">
+                                        <td key={z} className="default_row">
                                         <td style={{width:'200px',borderTop:'none'}}>{tableData[i].data[index].Forecast}</td>
                                         <td style={{width:'200px',borderTop:'none'}}>{tableData[i].data[index].Actual}</td>
                                         <td style={{width:'200px',borderTop:'none',padding:'0'}}>
@@ -51,7 +53,7 @@ const Table = ({ tableData,dateColumn, type , handleChange}) =>{
                                             <Progress  
                                               gapDegree={125} 
                                               strokeColor={(Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual)*100 < 40  || tableData[i].data[index].Actual === 0? "red" : (Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual)*100 < 70 ? "#FFAA00" : (Math.abs(tableData[i].data[index].Actual - tableData[i].data[index].Forecast)/tableData[i].data[index].Actual)*100 < 90 ? "#E6F600" : "green"} 
-                                              width={"70px"} 
+                                              width={70} 
                                               strokeLinecap = {1} 
                                               strokeWidth={10} 
                                               type="dashboard" 
@@ -79,10 +81,15 @@ const Table = ({ tableData,dateColumn, type , handleChange}) =>{
                             )}
                             )
                           :
-                          <p>No Data Available!</p>
+                          <tr>
+                          <td colSpan="5">
+                          <img src = {LayoutImages.NoData} alt="No data" width="50%" height="25%" />
+                          </td>
+                      </tr>
                         }                    
                     </tbody>
                 </table>
+                </div>
         </>
     );
 }

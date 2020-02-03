@@ -53,13 +53,23 @@ tr,th{
   border-left:none;
 }
 
-@media screen and (max-width: 768px ) {
- 
+@media screen and (min-width: 768px ) {
+  .MuiToolbar-gutters{
+    display: contents;
+  }
+}
+@media (min-width: 250px) and (max-width: 767px) {
+  
+  .MuiToolbar-gutters{
+    display: contents;
+  }
 }
 /* 
 search css
 */
- 
+ body{
+   overflow-x: hidden;
+ }
 .box{
 
 }
@@ -240,4 +250,5 @@ input[type=text]:focus {
 }
 .ant-calendar-range{
   width: 100% !important;
+  overflow: auto;
 }

@@ -5,6 +5,7 @@ import Graph from "../graph";
 import moment from 'moment';
 import { summaryData } from './data';
 import Table from "./Table";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 const { RangePicker } = DatePicker;
 
 const SummaryTable = () => {
@@ -61,6 +62,7 @@ const SummaryTable = () => {
                   
                   groupedData.push(temp_object);
               }
+              return null;
           })
 
           return groupedData;
@@ -83,6 +85,7 @@ const SummaryTable = () => {
         {
         tempDateColumn.push(data.Date);
         }
+        return null;
       })
 
       handleDateColumn(tempDateColumn);
@@ -102,6 +105,7 @@ const SummaryTable = () => {
             tempArray1.push([data.Date,data.Forecast]);
             tempArray2.push([data.Date,data.Actual]);
           }
+          return null;
         });
   
         setgraphForecast(tempArray1);
@@ -121,6 +125,7 @@ const SummaryTable = () => {
         tempArray1.push([data.Date,data.Forecast]);
         tempArray2.push([data.Date,data.Actual]);
         }
+        return null;
     });
 
     setgraphForecast(tempArray1);
@@ -142,6 +147,7 @@ const SummaryTable = () => {
           {
             console.log("not inside range");
           }
+          return null;
         })
         handleDateColumn(tempDate);
       }
@@ -151,6 +157,7 @@ const SummaryTable = () => {
       }
     }
 
+    const matches = useMediaQuery('(min-width:768px)');
     
     return (
         <>
@@ -172,6 +179,7 @@ const SummaryTable = () => {
                 actual = {actualGraph}
               />
             </Modal>
+        <div className={matches?"":'mt-5'}>
           <div className="mb-3">
                  <RangePicker onChange={onChange} />
           </div>
@@ -190,6 +198,7 @@ const SummaryTable = () => {
                     handleChange = {handleChart1}
                 />
             </div>
+        </div>
         </>
     )
 }
