@@ -132,7 +132,19 @@ width: 100%;
 transition: width .55s ease;
 background-color:white;
 }
-.container-2:hover .text{
+.container-2 input#search:focus,.container-2:active input#search{
+  width: 100%;
+  -webkit-transition: width .55s ease;
+  -moz-transition: width .55s ease;
+  -ms-transition: width .55s ease;
+  -o-transition: width .55s ease;
+  transition: width .55s ease;
+  background-color:white;
+  }
+  .container-2:focus,.container-2:active .text{
+    display:  none;
+    }
+  .container-2:hover .text{
   display: none;
   -webkit-transition: width .55s ease;
   -moz-transition: width .55s ease;
@@ -140,6 +152,14 @@ background-color:white;
   -o-transition: width .55s ease;
   transition: width .55s ease;
   }
+/* .container-2 input#search:focus ,.container-2 input#search:active .text{
+  display: none;
+  -webkit-transition: width .55s ease;
+  -moz-transition: width .55s ease;
+  -ms-transition: width .55s ease;
+  -o-transition: width .55s ease;
+  transition: width .55s ease;
+  } */
  
 .container-2:hover .icon{
   color: #93a2ad;

@@ -96,7 +96,7 @@ const ForecastTable = () => {
                             <th style={{width:"200px"}}> 
                             <div class="container-2">
                                 <span>
-                                <input type="search" id="search" placeholder="Product..." /><span className="text">SKU</span>
+                                <input type="search" id="search" placeholder="SKU..." /><span className="text">SKU</span>
                                 </span>
                             </div>
                             </th>
@@ -110,21 +110,21 @@ const ForecastTable = () => {
                             <th style={{width:"200px"}}>
                             <div class="container-2">
                                 <span>
-                                <input type="search" id="search" placeholder="Product..." /><span className="text">Segment</span>
+                                <input type="search" id="search" placeholder="Segment..." /><span className="text">Segment</span>
                                 </span>
                             </div>
                             </th>
                             <th style={{width:"200px"}}>
                             <div class="container-2">
                                 <span>
-                                <input type="search" id="search" placeholder="Product..." /><span className="text">Size</span>
+                                <input type="search" id="search" placeholder="Size..." /><span className="text">Size</span>
                                 </span>
                             </div>
                             </th>
                             <th style={{width:"200px"}}> 
                             <div class="container-2">
                                 <span>
-                                <input type="search" id="search" placeholder="Product..." /><span className="text">Category</span>
+                                <input type="search" id="search" placeholder="Category..." /><span className="text">Category</span>
                                 </span>
                             </div>
                             </th>
