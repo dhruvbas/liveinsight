@@ -14,12 +14,21 @@ const { RangePicker } = DatePicker;
 const ForecastTable = () => {
 
     const [forecastData, setforecastData] = useState([]);
+    const [tempForecastData, setforecastData1] = useState([]);
     const [dateColumn, handleDateColumn] = useState([]);
     const [dateColumn1, handleDateColumn1] = useState([]);
 
     const [openModal,handleModal] = useState(false);
     const [forecastGraph,setgraphForecast] = useState([]);
     const [actualGraph,setgraphActual] = useState([]);
+
+    const [filter,setFilter] = useState({
+      SKU : "",
+      Product : "",
+      Size : "",
+      Segment : "",
+      Category : ""
+    });
 
 
     useEffect(() => {
@@ -28,15 +37,11 @@ const ForecastTable = () => {
 
     const groupData = () =>{
       console.log(ForecastData);
-      let groupedData = [],tempDateColumn = [];
+      let groupedData = [];
+      
 
       // eslint-disable-next-line array-callback-return
       ForecastData.map((data, i) => {
-          let dateIndex = tempDateColumn.indexOf(data.Date);
-          if(dateIndex === -1)
-          {
-            tempDateColumn.push(data.Date);
-          }
           let index = groupedData.findIndex(x => x.SKU.toString() === data.SKU.toString());
           let forecast = data.Forecast;
           let actual = data.Actual;
@@ -79,10 +84,10 @@ const ForecastTable = () => {
           }
       })
 
-      handleDateColumn(tempDateColumn);
-      handleDateColumn1(tempDateColumn);
       setforecastData(groupedData);
+      setforecastData1(groupedData);
       console.log(groupedData);
+      changeDate();
     }
 
     const onChange = (date, dateString) =>{
@@ -105,8 +110,25 @@ const ForecastTable = () => {
         
     }
     else {
-      groupData();
+      changeDate();
   }
+}
+
+const changeDate = () =>{
+  let tempDateColumn = [];
+        ForecastData.map((data, i) => {
+            let dateIndex = tempDateColumn.indexOf(data.Date);
+            if(dateIndex === -1)
+            {
+              tempDateColumn.push(data.Date);
+            }
+            return null;
+        });
+        tempDateColumn.sort(function(a,b){
+          return new Date(a) - new Date(b);
+        });
+        handleDateColumn(tempDateColumn);
+        handleDateColumn1(tempDateColumn); 
 }
 
     const handleChart = (i) =>{
@@ -130,16 +152,49 @@ const ForecastTable = () => {
     }
 
     const handleChange = (e) =>{
-      let tempData = JSON.parse(JSON.stringify(forecastData));
-
-      console.log(tempData);
+      let tempFilter = filter;
+      tempFilter[e.target.name] = e.target.value;
+      let tempData = JSON.parse(JSON.stringify(tempForecastData));
 
       let newData = tempData.filter(x => {
         let text = new RegExp(e.target.value, "i");
-        return x[e.target.name].search(text) >= 0 ?  true:  false
+        let search = true;
+
+        let deepsearch = true;
+
+        search = tempFilter.SKU ? x.SKU.search(new RegExp(tempFilter.SKU, "i")) >= 0 ?  true :  false : search;
+        //console.log(search,deepsearch);
+        deepsearch = deepsearch && search;
+        
+        search = tempFilter.Product ? x.Product.search(new RegExp(tempFilter.Product, "i")) >= 0 ?  true :  false : search;
+        // console.log(search,deepsearch);
+        deepsearch = deepsearch && search;
+        
+        search = tempFilter.Size ? x.Size.search(new RegExp(tempFilter.Size, "i")) >= 0 ?  true :  false : search;
+        // console.log(search,deepsearch);
+        deepsearch = deepsearch && search;
+        
+        search = tempFilter.Category ? x.Category.search(new RegExp(tempFilter.Category, "i")) >= 0 ?  true :  false : search;
+        // console.log(search,deepsearch);
+        deepsearch = deepsearch && search;
+        
+        search = tempFilter.Segment ? x.Segment.search(new RegExp(tempFilter.Segment, "i")) >= 0 ?  true :  false : search;
+        // console.log(search,deepsearch);
+        deepsearch = deepsearch && search;
+        // console.log(search,deepsearch);
+        return deepsearch; 
       });
-      setforecastData(newData);
       console.log(newData);
+      setforecastData(newData);
+      setFilter(tempFilter);
+      if(newData.length === 0){
+        handleDateColumn([]);
+        handleDateColumn1([]);
+      }
+      else{
+        changeDate();
+      }
+
     }
 
     const matches = useMediaQuery('(min-width:768px)');

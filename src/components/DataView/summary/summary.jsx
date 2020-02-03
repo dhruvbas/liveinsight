@@ -87,7 +87,9 @@ const SummaryTable = () => {
         }
         return null;
       })
-
+      tempDateColumn.sort(function(a,b){
+        return new Date(a) - new Date(b);
+      });
       handleDateColumn(tempDateColumn);
       handleDateColumn1(tempDateColumn);
 

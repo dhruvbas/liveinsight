@@ -233,10 +233,14 @@ input[type=text]:focus {
 
 .A .ant-progress-circle .ant-progress-text{
   color:red;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .B .ant-progress-circle .ant-progress-text{
   color:#FFAA00;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .C .ant-progress-circle .ant-progress-text{
@@ -247,6 +251,8 @@ input[type=text]:focus {
 
 .D .ant-progress-circle .ant-progress-text{
   color:green;
+  font-weight: bold;
+  font-size: 14px;
 }
 .ant-calendar-range{
   width: 100% !important;
